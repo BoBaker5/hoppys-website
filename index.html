@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoppy's Christmas Tree Farm · North Stonington, CT</title>
+<meta name="description" content="A family-run cut-your-own Christmas tree farm in North Stonington, Connecticut. Fresh trees, handmade wreaths, local honey, and maple syrup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pine:#13392b;--pine-deep:#0a2219;
+    --cream:#eef3f4;--cream-soft:#dde8ea;
+    --honey:#c1272d;--honey-soft:#e85a5f;
+    --bark:#1d5e7a;--frost:#cde0e6;--ink:#15282a;
+    --silver:#9fc1cc;
+    --display:"Fraunces",Georgia,serif;--body:"Inter",system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden}
+  h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.05;letter-spacing:-.01em}
+  a{color:inherit}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+
+  #snow{position:fixed;inset:0;pointer-events:none;z-index:60}
+  .flake{position:absolute;top:-10px;color:#fff;animation:fall linear infinite}
+  @keyframes fall{0%{transform:translateY(-10vh);opacity:0}10%{opacity:.85}100%{transform:translateY(110vh) translateX(40px);opacity:.1}}
+  @media (prefers-reduced-motion:reduce){#snow{display:none}}
+
+  nav{position:sticky;top:0;z-index:50;background:rgba(13,33,26,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(217,155,43,.25)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:11px;color:var(--cream);font-family:var(--display);font-weight:600;font-size:1.12rem;text-decoration:none}
+  .brand img{width:40px;height:40px;object-fit:contain;background:var(--cream);border-radius:9px;padding:3px}
+  .navlinks{display:flex;gap:30px;align-items:center}
+  .navlinks a{color:var(--frost);text-decoration:none;font-size:.92rem;font-weight:500;transition:color .2s}
+  .navlinks a:hover{color:var(--silver)}
+  .navlinks .pill{background:var(--honey);color:var(--pine-deep);padding:9px 18px;border-radius:100px;font-weight:600}
+  .navlinks .pill:hover{background:var(--honey-soft)}
+  .menubtn{display:none;background:none;border:0;color:var(--cream);cursor:pointer}
+  @media(max-width:820px){
+    .navlinks{display:none}
+    .menubtn{display:block}
+    .navlinks.open{display:flex;flex-direction:column;position:absolute;top:70px;left:0;right:0;background:var(--pine-deep);padding:18px 24px;gap:18px;border-bottom:1px solid rgba(217,155,43,.25)}
+  }
+
+  .hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;color:var(--cream);overflow:hidden}
+  .hero .bg{position:absolute;inset:0;z-index:0}
+  .hero .bg img{width:100%;height:100%;object-fit:cover}
+  .hero .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,33,26,.55) 0%,rgba(13,33,26,.15) 35%,rgba(13,33,26,.85) 100%)}
+  .hero .wrap{position:relative;z-index:2;padding-top:70px;padding-bottom:72px;width:100%}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;font-weight:600;margin-bottom:22px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--honey)}
+  .hero h1{font-size:clamp(2.8rem,7.5vw,5.6rem);font-weight:900;color:#fff;max-width:15ch;margin-bottom:22px;text-shadow:0 2px 30px rgba(0,0,0,.4)}
+  .hero h1 em{font-style:italic;font-weight:400;color:var(--silver)}
+  .hero p.lede{font-size:clamp(1.05rem,2.2vw,1.32rem);max-width:48ch;color:#eef3ef;margin-bottom:34px;text-shadow:0 1px 16px rgba(0,0,0,.5)}
+  .cta-row{display:flex;gap:16px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 28px;border-radius:100px;text-decoration:none;font-weight:600;font-size:1rem;transition:transform .15s,background .2s}
+  .btn-primary{background:var(--honey);color:var(--pine-deep);box-shadow:0 8px 30px -8px rgba(193,39,45,.5)}
+  .btn-primary:hover{background:var(--honey-soft);transform:translateY(-2px)}
+  .btn-ghost{border:1.5px solid rgba(255,255,255,.55);color:#fff;backdrop-filter:blur(2px)}
+  .btn-ghost:hover{border-color:#fff;color:#fff}
+
+  .strip{background:var(--honey);color:#fff}
+  .strip .wrap{display:flex;flex-wrap:wrap;gap:14px 40px;justify-content:center;align-items:center;padding:18px 24px;text-align:center}
+  .strip strong{font-family:var(--display);font-weight:600}
+  .strip span{font-size:.95rem;font-weight:500}
+
+  section.block{padding:96px 0}
+  .sechead{max-width:60ch;margin-bottom:50px}
+  .sechead .tag{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--honey);font-weight:700;display:block;margin-bottom:14px}
+  .sechead h2{font-size:clamp(2rem,4.5vw,3.1rem);color:var(--pine)}
+  .sechead p{margin-top:16px;color:#4a5750;font-size:1.08rem;max-width:52ch}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+  .card{background:#fff;border:1px solid var(--cream-soft);border-radius:18px;overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+  .card:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(22,53,42,.4)}
+  .card .ph{aspect-ratio:4/3;overflow:hidden;background:var(--cream-soft)}
+  .card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+  .card:hover .ph img{transform:scale(1.05)}
+  .card .body{padding:24px 26px 28px}
+  .card h3{font-size:1.3rem;color:var(--pine);margin-bottom:9px}
+  .card p{color:#55615a;font-size:.97rem}
+
+  /* hayride banner */
+  .hayride{background:var(--pine);color:var(--cream)}
+  .hayride .wrap{display:flex;gap:30px;align-items:center;flex-wrap:wrap;padding:34px 24px}
+  .hayride .hr-ic{flex:none;width:64px;height:64px;border-radius:16px;background:rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center}
+  .hayride .hr-tx{flex:1;min-width:260px}
+  .hayride h3{font-size:1.5rem;color:var(--cream);margin-bottom:8px}
+  .hayride p{color:var(--frost);font-size:1.02rem}
+  .hayride .hr-badge{flex:none;background:var(--honey);color:#fff;font-weight:700;font-family:var(--display);padding:10px 18px;border-radius:100px;font-size:.95rem}
+
+  /* tree varieties */
+  .trees-sec{background:linear-gradient(180deg,var(--cream),var(--cream-soft))}
+  .tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+  .tcard{background:#fff;border:1px solid var(--cream-soft);border-radius:18px;padding:28px 26px;position:relative;transition:transform .2s,box-shadow .2s;border-top:4px solid var(--pine)}
+  .tcard:hover{transform:translateY(-4px);box-shadow:0 18px 40px -22px rgba(22,53,42,.4)}
+  .tcard.fraser{border-top-color:var(--honey)}
+  .tcard h3{font-size:1.32rem;color:var(--pine);margin-bottom:4px}
+  .tcard .nick{font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;color:var(--bark);font-weight:600;margin-bottom:12px;display:block}
+  .tcard p{color:#55615a;font-size:.96rem}
+  .tcard .grow{margin-top:14px;padding-top:12px;border-top:1px solid var(--cream-soft);font-size:.85rem;color:var(--pine);font-weight:600}
+
+  /* safety + tips */
+  .safety .wrap{display:block}
+  .safety .srow{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:1140px;margin:0 auto;padding:0 24px}
+  @media(max-width:820px){.safety .srow{grid-template-columns:1fr;gap:34px}}
+  .safety .blurb h3{font-size:1.15rem;color:var(--pine);margin:0 0 10px;display:flex;align-items:center;gap:9px}
+  .safety .blurb p{color:#4a5750;font-size:1rem;margin-bottom:22px}
+  .tips{background:var(--pine);border-radius:22px;padding:34px 32px;color:var(--cream)}
+  .tips h3{font-size:1.4rem;color:var(--cream);margin-bottom:6px}
+  .tips .sub{color:var(--frost);font-size:.95rem;margin-bottom:22px}
+  .tip{padding:14px 0;border-bottom:1px solid rgba(207,221,212,.16);display:flex;gap:14px}
+  .tip:last-child{border-bottom:0}
+  .tip .n{flex:none;width:28px;height:28px;border-radius:8px;background:var(--honey);color:#fff;font-weight:700;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:var(--display)}
+  .tip .t b{color:var(--cream);display:block;margin-bottom:2px;font-size:.98rem}
+  .tip .t span{color:var(--frost);font-size:.9rem}
+
+  .exp{background:var(--pine);color:var(--cream)}
+  .exp .sechead h2{color:var(--cream)}
+  .exp .sechead p{color:var(--frost)}
+  .exp .sechead .tag{color:var(--silver)}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;counter-reset:step}
+  .step{position:relative;padding-top:28px}
+  .step::before{counter-increment:step;content:"0" counter(step);font-family:var(--display);font-size:2.4rem;color:var(--silver);font-weight:500;display:block;margin-bottom:12px}
+  .step h3{font-size:1.2rem;margin-bottom:8px;color:var(--cream)}
+  .step p{color:var(--frost);font-size:.96rem}
+  .step::after{content:"";position:absolute;top:46px;left:2.6em;right:-15px;height:1px;background:linear-gradient(90deg,rgba(217,155,43,.5),transparent)}
+  .step:last-child::after{display:none}
+  @media(max-width:760px){.step::after{display:none}}
+
+  .story .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+  @media(max-width:820px){.story .wrap{grid-template-columns:1fr;gap:34px}}
+  .story h2{font-size:clamp(2rem,4.5vw,3rem);color:var(--pine);margin-bottom:20px}
+  .story p{color:#4a5750;font-size:1.06rem;margin-bottom:16px}
+  .story .photo{border-radius:22px;overflow:hidden;border:1px solid var(--cream-soft);box-shadow:0 24px 50px -28px rgba(22,53,42,.5);aspect-ratio:4/5}
+  .story .photo img{width:100%;height:100%;object-fit:cover}
+
+  .visit{background:linear-gradient(180deg,var(--cream),var(--cream-soft))}
+  .visit .grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+  @media(max-width:820px){.visit .grid{grid-template-columns:1fr;gap:34px}}
+  .info .row{padding:20px 0;border-bottom:1px solid #ddd3bd}
+  .info .row:last-child{border-bottom:0}
+  .info h3{font-size:1.05rem;color:var(--pine);margin-bottom:6px;display:flex;align-items:center;gap:9px}
+  .info p{color:#4a5750}
+  .info a.link{color:var(--bark);font-weight:600;text-decoration:underline;text-decoration-color:var(--honey)}
+  .mapcard{background:var(--pine);border-radius:22px;padding:40px;color:var(--cream);display:flex;flex-direction:column;justify-content:space-between;min-height:320px}
+  .mapcard h3{font-size:1.7rem;color:var(--cream);margin-bottom:14px}
+  .mapcard p{color:var(--frost);margin-bottom:26px}
+  .mapcard .btn-primary{align-self:flex-start}
+
+  /* contact */
+  .contact{background:var(--pine);color:var(--cream)}
+  .contact .sechead h2{color:var(--cream)}
+  .contact .sechead p{color:var(--frost)}
+  .contact .sechead .tag{color:var(--silver)}
+  .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  @media(max-width:820px){.cgrid{grid-template-columns:1fr;gap:34px}}
+  .cform .field{margin-bottom:18px}
+  .cform label{display:block;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;color:var(--silver);font-weight:600;margin-bottom:7px}
+  .cform input,.cform textarea{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(207,221,212,.25);border-radius:12px;padding:13px 15px;color:#fff;font-family:var(--body);font-size:1rem;transition:border-color .2s,background .2s}
+  .cform input::placeholder,.cform textarea::placeholder{color:rgba(207,221,212,.5)}
+  .cform input:focus,.cform textarea:focus{outline:none;border-color:var(--honey);background:rgba(255,255,255,.1)}
+  .cform textarea{resize:vertical;min-height:120px}
+  .cform button{cursor:pointer;border:0;width:100%;justify-content:center}
+  .cnote{font-size:.85rem;color:var(--frost);margin-top:14px}
+  .cnote a{color:var(--silver)}
+  .formmsg{display:none;padding:14px 16px;border-radius:12px;font-size:.95rem;margin-bottom:18px}
+  .formmsg.ok{display:block;background:rgba(159,193,204,.14);border:1px solid var(--silver);color:var(--silver)}
+  .formmsg.err{display:block;background:rgba(190,70,60,.16);border:1px solid #c45a4a;color:#f0b8af}
+  .cside .row{padding:18px 0;border-bottom:1px solid rgba(207,221,212,.18)}
+  .cside .row:last-child{border-bottom:0}
+  .cside h3{font-size:1.02rem;color:var(--cream);margin-bottom:6px;display:flex;align-items:center;gap:9px}
+  .cside p{color:var(--frost);font-size:.97rem}
+  .cside a.link{color:var(--silver);font-weight:600}
+
+  footer{background:var(--pine-deep);color:var(--frost);padding:54px 0 30px}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:30px;align-items:flex-start}
+  footer .brand{margin-bottom:12px}
+  footer .ftxt p{font-size:.9rem;max-width:34ch;color:#9fb3a8}
+  footer .fcol h4{font-family:var(--body);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--silver);margin-bottom:14px}
+  footer .fcol a{display:block;color:var(--frost);text-decoration:none;font-size:.95rem;margin-bottom:9px;transition:color .2s}
+  footer .fcol a:hover{color:var(--silver)}
+  .copyright{margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);font-size:.82rem;color:#7f9389;text-align:center}
+</style>
+</head>
+<body>
+
+<div id="snow" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="brand">
+      <img src="images/logo.png" alt="Hoppy Tree logo">
+      Hoppy Tree
+    </a>
+    <button class="menubtn" aria-label="Menu" onclick="document.getElementById('nl').classList.toggle('open')">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="navlinks" id="nl">
+      <a href="#offerings">What we grow</a>
+      <a href="#trees">Our trees</a>
+      <a href="#how">How it works</a>
+      <a href="#story">Our farm</a>
+      <a href="#visit-info">Visit info</a>
+      <a href="#contact">Contact</a>
+      <a href="#visit" class="pill">Plan a visit</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="bg"><img src="images/trees.jpg" alt="Rows of Christmas trees at Hoppy Tree farm under a clear blue sky"></div>
+  <div class="wrap">
+    <span class="eyebrow">Family-run · North Stonington, Connecticut</span>
+    <h1>Find the one you'll <em>remember</em> every December.</h1>
+    <p class="lede">A family run cut-your-own farm in North Stonington, growing the trees our dad, Hoppy, planted. Walk the rows, find your tree, and hunt for the hand-painted characters.</p>
+    <div class="cta-row">
+      <a href="#visit" class="btn btn-primary">Plan your visit
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#offerings" class="btn btn-ghost">See what we grow</a>
+    </div>
+  </div>
+</header>
+
+<div class="strip">
+  <div class="wrap">
+    <span><strong>Opening</strong> November 27, 2026 · weekends 9–4</span>
+    <span><strong>Cut-your-own</strong> trees</span>
+    <span><strong>Hay Wagon Rides</strong> and Scavenger Hunt for the kids</span>
+  </div>
+</div>
+
+<section class="block" id="offerings">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="tag">From our hands to Yours</span>
+      <h2>More than a tree to take home.</h2>
+      <p>Every tree is grown on our farm, every wreath crafted by hand, our syrup is made right here on the property, our honey comes from a trusted family friend, and our shop features handmade crafts and Hoppy's merch curated for your visit.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="ph"><img src="images/trees.jpg" alt="Fields of fir and spruce trees ready to cut"></div>
+        <div class="body">
+          <h3>Cut-your-own trees</h3>
+          <p>Walk the rows, pick your favorite, and cut it down yourself. Firs and spruce in every size.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ph"><img src="images/wreaths.jpg" alt="Handmade wreaths hanging on ladders outside the farm stand"></div>
+        <div class="body">
+          <h3>Handmade wreaths</h3>
+          <p>Handmade wreaths, freshcut and made with care — each one crafted by hand with the kind of attention only a small farm can give.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ph"><img src="images/syrup.jpg" alt="Local honey, maple syrup nips and hot sauce on the farm stand"></div>
+        <div class="body">
+          <h3>Honey, syrup &amp; more</h3>
+          <p>Maple syrup from local trees, boiled on site in our sugar shack, plus raw honey from North Stonington's own Honey and Beeyond. Grab a jar on your way out.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hayride">
+  <div class="wrap">
+    <div class="hr-ic">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><circle cx="6" cy="18" r="2.5"/><circle cx="17" cy="18" r="2.5"/><path d="M2 6h10l2 6h6v3M2 6v9h2.5M8.5 18h6"/></svg>
+    </div>
+    <div class="hr-tx">
+      <h3>Oh what fun… hayrides!</h3>
+      <p>Climb aboard for a fun, free hayride through our festive Christmas tree fields! Our tractor circles the fields about every 20 minutes — a spin past the trees, crisp winter air, and plenty of photo ops. Perfect for giggles, family fun, and a little Christmas magic.</p>
+    </div>
+    <div class="hr-badge">Free · every ~20 min</div>
+  </div>
+</div>
+
+<section class="block trees-sec" id="trees">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="tag">Our trees</span>
+      <h2>Find your perfect fir or spruce.</h2>
+      <p>Every tree is grown right here on the farm. Here's what you'll find in the fields, and how to pick the one that's right for your home.</p>
+    </div>
+    <div class="tgrid">
+      <div class="tcard fraser">
+        <h3>Fraser Fir</h3>
+        <span class="nick">The Cadillac of Christmas trees</span>
+        <p>Loved for its rich green needles with a silvery shimmer and soft, full branches that are a dream to decorate — even with your heaviest ornaments. Fills your home with a gentle, classic Christmas fragrance and keeps its needles beautifully all season long.</p>
+        <div class="grow">Grown with care for 7–10 years</div>
+      </div>
+      <div class="tcard">
+        <h3>Balsam Fir</h3>
+        <span class="nick">A timeless favorite</span>
+        <p>Shines with dark green needles and a silvery underside that sparkles in the light. Its soft, flat needles and graceful branches are perfect for lighter ornaments, filling your home with that classic Christmas fragrance everyone loves. Excellent needle retention.</p>
+        <div class="grow">9–10 years of careful growing</div>
+      </div>
+      <div class="tcard">
+        <h3>Concolor Fir</h3>
+        <span class="nick">A fresh citrus twist</span>
+        <p>With sturdy branches and an elegant, natural shape, the Concolor is both beautiful and dependable — perfect for showcasing your favorite ornaments. Its soft needles release a delightful citrus-like fragrance, and it stays lovely all through Christmas.</p>
+        <div class="grow">Grown with care for 4–8 years</div>
+      </div>
+      <div class="tcard">
+        <h3>Spruce (white &amp; blue)</h3>
+        <span class="nick">A show-stopping display</span>
+        <p>A striking choice, with short needles ranging from deep green to a beautiful silver-blue. Sturdy branches hold heavier ornaments with ease. A healthy spruce can last up to six weeks when properly cared for. <em>Note: needles are a bit prickly and have a strong scent if crushed.</em></p>
+        <div class="grow">Grown 4–8 years to 7–8 ft</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block exp" id="how">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="tag">Your Farm Visit Experience</span>
+      <h2>How a visit goes.</h2>
+      <p>No appointment, no rush. Come when the light's good, leave with the tree and a story.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><h3>Grab a saw</h3><p>We hand you a saw. Gloves and warm boots help as you wander the fields to find the one that feels right.</p></div>
+      <div class="step"><h3>Ride out &amp; roam</h3><p>Hop the hay wagon behind our 1950 Farmall, then take your time among the firs and spruce.</p></div>
+      <div class="step"><h3>Cut it down</h3><p>Lay down next to the tree, give it a few minutes of sawing, and let the holiday magic do the rest.</p></div>
+      <div class="step"><h3>Find the characters</h3><p>Kids hunt for Hoppy's hand-painted cutouts hidden in the rows, with a wreath and syrup to take home.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block story" id="story">
+  <div class="wrap">
+    <div>
+      <span class="tag" style="font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--honey);font-weight:700;display:block;margin-bottom:14px">Our story</span>
+      <h2>Hoppy's Family farm, keeping Hoppy's memory alive</h2>
+      <p>Once upon a December long ago, Christmas at our house meant rosy cheeks, sticky mittens, and a row of trees sold for a dollar a foot — six dollars was the maximum. Every weekend from Thanksgiving to Christmas, we bundled up like little elves, twisting garland, tying wreaths, and earning our holiday money under the cheerful watch of our dad, <strong>Bob "Hoppy" Hauptmann</strong>, whose laugh could jingle louder than any sleigh bell. As the years rolled on, we grew up, and the old farm quietly waited, like a snowcovered storybook waiting to be opened again.</p>
+      <p>Then in 2004, Hoppy — with his twinkling eyes and a heart big enough to warm the whole North Pole — cleared the fields and began planting once more. He dreamed of gathering all of us, and the grandkids too, back to the place where Christmas always felt a little enchanted. He ordered tiny seedlings, marked the rows with the care of a toymaker, and rallied the whole family every Mother's Day to tuck those baby trees into the earth. It was his way of planting joy, one little evergreen at a time.</p>
+      <p>When Hoppy passed unexpectedly in 2012, the world felt quieter, as if the wind itself paused in the branches. But Christmas magic has a way of lingering — especially Hoppy's. To honor him, his four children and their growing families returned from near and far to sell the trees he had lovingly raised. That first season, we huddled on logs by the fire pit, watching the driveway for headlights, knowing that even one tree sold would have made Hoppy beam like a star atop the tallest spruce.</p>
+      <p>Since then, the farm has blossomed into a place where holiday magic practically hums in the air. There's the sugar shack where we boil maple syrup into golden sweetness, hay wagon rides behind a 1950 Farmall that chugs like a storybook tractor, and the lifesize Santa, Elf, and Rudolph that Hoppy handcut and handpainted — each one a little piece of his joy frozen in time. Now the grandkids add their own creations, hiding new characters in the fields for a children's scavenger hunt that feels like stepping straight into a Christmas adventure.</p>
+      <p>Every wreath we tie, every tree we help cut, every giggle drifting across the snowy rows carries a spark of Hoppy's spirit. His holiday magic lives in every corner of the farm — glowing brighter each year, just the way he would've wanted.</p>
+      <a href="#visit" class="btn btn-primary" style="margin-top:8px">Come find your tree
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="photo"><img src="images/snow.jpg" alt="Snow-covered Christmas trees at Hoppy's farm with a hand-painted character cutout among the rows"></div>
+  </div>
+</section>
+
+<section class="block safety" id="visit-info">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="tag">Things to know</span>
+      <h2>Enjoying the farm safely.</h2>
+      <p>A few friendly notes to help everyone have a joyful, safe visit — and how to keep your tree fresh once it's home.</p>
+    </div>
+  </div>
+  <div class="srow">
+    <div class="blurb">
+      <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c1272d" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>While you wander</h3>
+      <p>Please be mindful of the ropes in the fields — they help keep everyone safe and merry. The cozy house between the fields is a private residence, so we kindly ask that you use the street or the back path when moving from field to field. If you're on the street, please travel with care — it's a public road, and we want all our guests to have a joyful, safe visit.</p>
+      <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c1272d" stroke-width="2"><path d="M3 12h18M12 3v18"/><circle cx="12" cy="12" r="9"/></svg>Meet the sheep</h3>
+      <p>Our wonderful neighbors, the Zichichi family, have shared something special — their friendly sheep have come to visit! Guests are welcome to say hello and feed them (feed bags are available for purchase at the table by the fenced area). For everyone's safety — and the sheep's — please enjoy them from <strong>outside the fence</strong>, and <strong>please do not touch the fence</strong>, as it is electrified for the animals' protection.</p>
+    </div>
+    <div class="tips">
+      <h3>Keeping your tree fresh</h3>
+      <p class="sub">Real trees. Real memories. A little care goes a long way.</p>
+      <div class="tip"><div class="n">1</div><div class="t"><b>Start with a fresh tree</b><span>The fresher the tree, the longer it lasts. Test needle retention by grasping a branch and pulling down gently.</span></div></div>
+      <div class="tip"><div class="n">2</div><div class="t"><b>Get a fresh cut</b><span>If it's not a fresh-cut tree, cut an inch or so off the base of the trunk.</span></div></div>
+      <div class="tip"><div class="n">3</div><div class="t"><b>Water immediately</b><span>Get your tree into water as soon as you're home. Just tap water — don't add sugar, aspirin, corn syrup, or bleach.</span></div></div>
+      <div class="tip"><div class="n">4</div><div class="t"><b>The right stand for the right tree</b><span>Make sure your stand holds at least 1 to 1½ gallons. Scale up if you're unsure.</span></div></div>
+      <div class="tip"><div class="n">5</div><div class="t"><b>Check your surroundings</b><span>Keep it away from heat sources. Check outlets, lights, and cords for defects. Turn tree lights off at night or when away.</span></div></div>
+      <div class="tip"><div class="n">6</div><div class="t"><b>Water often, water daily</b><span>Check the stand daily so the water never drops below the base of the trunk.</span></div></div>
+      <div class="tip"><div class="n">7</div><div class="t"><b>Recycle!</b><span>Real trees are 100% recyclable and biodegradable. Most towns have recycling or curbside pickup programs.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="block visit" id="visit">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="tag">Plan your visit</span>
+      <h2>Find us in North Stonington.</h2>
+      <p>Everything you need to plan your trip is right here. Come spend a morning with us.</p>
+    </div>
+    <div class="grid">
+      <div class="info">
+        <div class="row">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c1272d" stroke-width="2"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Where</h3>
+          <p>108 Ryder Rd, North Stonington, CT 06359. <a class="link" href="https://maps.google.com/?q=108+Ryder+Rd,+North+Stonington,+CT+06359" target="_blank" rel="noopener">Get directions →</a></p>
+        </div>
+        <div class="row">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c1272d" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>When</h3>
+          <p>Opening November 27, 2026, then weekends 9–4 through Christmas. Open in all weather.</p>
+        </div>
+        <div class="row">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c1272d" stroke-width="2"><path d="M4 4h16v12H7l-3 3V4z"/></svg>Follow along</h3>
+          <p>For photos and posts from the farm, follow us on <a class="link" href="https://www.facebook.com/hoppystreefarm/" target="_blank" rel="noopener">Facebook</a>.</p>
+        </div>
+      </div>
+      <div class="mapcard">
+        <div>
+          <h3>The drive is the point.</h3>
+          <p>Bring the kids, the dog, and a thermos. Half the fun is the morning out — the tree's just what you take home.</p>
+        </div>
+        <a href="https://maps.google.com/?q=108+Ryder+Rd,+North+Stonington,+CT+06359" target="_blank" rel="noopener" class="btn btn-primary">Get directions
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block contact" id="contact">
+  <div class="wrap">
+    <div class="sechead">
+      <span class="tag">Get in touch</span>
+      <h2>Send us some holiday cheer.</h2>
+      <p>Questions about hours, tree types, or whether Charlie Brown trees need love too? Drop us a note!</p>
+    </div>
+    <div class="cgrid">
+      <!-- ============================================================
+           CONTACT FORM
+           To make this email you, sign up free at https://formspree.io,
+           create a form, and replace YOUR_FORM_ID below with the ID it
+           gives you (looks like: https://formspree.io/f/abcdwxyz).
+           Until you do, the form shows a friendly fallback message
+           pointing people to Facebook.
+      ============================================================ -->
+      <form class="cform" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="formmsg" id="formMsg"></div>
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="I'd love to order two wreaths for pickup…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Send message
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="cnote">Prefer email? Reach us anytime at <a href="mailto:hoppytreeroh@gmail.com">hoppytreeroh@gmail.com</a> or on <a href="https://www.facebook.com/hoppystreefarm/" target="_blank" rel="noopener">Facebook</a>.</p>
+      </form>
+
+      <div class="cside">
+        <div class="row">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="2"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Visit us</h3>
+          <p>108 Ryder Rd, North Stonington, CT 06359.</p>
+        </div>
+        <div class="row">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Season hours</h3>
+          <p>Opening November 27, 2026 · weekends 9–4 through Christmas.</p>
+        </div>
+        <div class="row">
+          <h3><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--silver)" stroke-width="2"><path d="M3 5h18v14H3z"/><path d="m3 6 9 7 9-7"/></svg>Email</h3>
+          <p><a class="link" href="mailto:hoppytreeroh@gmail.com">hoppytreeroh@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="ftxt">
+      <a href="#top" class="brand"><img src="images/logo.png" alt="Hoppy Tree logo">Hoppy Tree</a>
+      <p>Hoppy's Christmas Tree Farm — a family tradition in North Stonington, CT, growing strong since 2012.</p>
+    </div>
+    <div class="fcol">
+      <h4>On the farm</h4>
+      <a href="#offerings">Cut-your-own trees</a>
+      <a href="#trees">Our tree varieties</a>
+      <a href="#offerings">Handmade wreaths</a>
+      <a href="#offerings">Honey &amp; maple syrup</a>
+    </div>
+    <div class="fcol">
+      <h4>Visit</h4>
+      <a href="#how">How it works</a>
+      <a href="#visit-info">Things to know</a>
+      <a href="#visit">Plan a visit</a>
+      <a href="#contact">Contact us</a>
+      <a href="https://www.facebook.com/hoppystreefarm/" target="_blank" rel="noopener">Facebook</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="copyright">© <span id="yr"></span> Hoppy's Christmas Tree Farm · 108 Ryder Rd, North Stonington, CT 06359 · In loving memory of Bob "Hoppy" Hauptmann.</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  document.querySelectorAll('#nl a').forEach(a=>a.addEventListener('click',()=>document.getElementById('nl').classList.remove('open')));
+
+  // contact form
+  (function(){
+    const form=document.getElementById('contactForm');
+    const msg=document.getElementById('formMsg');
+    if(!form) return;
+    form.addEventListener('submit',async function(e){
+      e.preventDefault();
+      msg.className='formmsg';
+      // not configured yet? guide the owner/visitor instead of failing silently
+      if(form.action.indexOf('YOUR_FORM_ID')!==-1){
+        msg.className='formmsg ok';
+        msg.innerHTML='Thanks! The email form isn\'t connected yet — for now, please email us at <a href="mailto:hoppytreeroh@gmail.com">hoppytreeroh@gmail.com</a> or message us on <a href="https://www.facebook.com/hoppystreefarm/" target="_blank" rel="noopener">Facebook</a>.';
+        return;
+      }
+      try{
+        const res=await fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}});
+        if(res.ok){
+          form.reset();
+          msg.className='formmsg ok';
+          msg.textContent='Thanks for reaching out — we\'ll get back to you soon.';
+        }else{
+          throw new Error('bad response');
+        }
+      }catch(err){
+        msg.className='formmsg err';
+        msg.innerHTML='Something went wrong sending that. Please try again, or message us on <a href="https://www.facebook.com/hoppystreefarm/" target="_blank" rel="noopener">Facebook</a>.';
+      }
+    });
+  })();
+  (function(){
+    if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    const snow=document.getElementById('snow');
+    const N=window.innerWidth<700?22:40;
+    for(let i=0;i<N;i++){
+      const f=document.createElement('div');
+      f.className='flake';f.textContent='❄';
+      const s=Math.random()*10+8;
+      f.style.left=Math.random()*100+'vw';
+      f.style.fontSize=s+'px';
+      f.style.animationDuration=(Math.random()*8+7)+'s';
+      f.style.animationDelay=(-Math.random()*12)+'s';
+      f.style.opacity=(Math.random()*.5+.3);
+      snow.appendChild(f);
+    }
+  })();
+</script>
+</body>
+</html>
